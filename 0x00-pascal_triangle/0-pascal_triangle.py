@@ -6,6 +6,10 @@ of lits representing pascal's triangle
 
 
 def pascal_triangle(n):
+    """
+    returns a list of list representing
+    pascal's triangle
+    """
     if n <= 0:
         return []
     if n == 1:
@@ -32,7 +36,10 @@ def pascal_triangle(n):
 # memory intensive solution
 # first try
 def pascal(n):
-
+    """
+    returns a list of list represrmting pascal's
+    triangle
+    """
     if n <= 0:
         return []
 
