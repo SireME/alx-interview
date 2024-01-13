@@ -33,7 +33,7 @@ def canUnlockAll(boxes):
                 try:
                     boxkeys[key] = 1
                     visitbox(boxes[key])
-                except IndexError:
+                except Exception:
                     del boxkeys[key]
     visitbox(boxes[0])
     return len(boxkeys) == len(boxes)
