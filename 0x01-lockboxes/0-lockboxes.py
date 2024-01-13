@@ -30,7 +30,10 @@ def canUnlockAll(boxes):
         """
         for key in box:
             if key not in boxkeys:
-                boxkeys[key] = 1
-                visitbox(boxes[key])
+                try:
+                    boxkeys[key] = 1
+                    visitbox(boxes[key])
+                except IndexError:
+                    del boxkeys[key]
     visitbox(boxes[0])
     return len(boxkeys) == len(boxes)
