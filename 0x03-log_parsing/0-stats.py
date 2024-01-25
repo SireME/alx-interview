@@ -13,8 +13,8 @@ total_size = 0
 try:
     for line in sys.stdin:
         rq = "GET /projects/260 HTTP/1.1"
-        pa = rf'^(\d+\.\d+\.\d+\.\d+) - \[([^\]]+)\] "{rq}" (\d+) (\d+)$'
-        match = re.match(pa, line)
+        pattern = rf'^(\d+\.\d+\.\d+\.\d+) - \[([^\]]+)\] "{rq}" (\d+) (\d+)$'
+        match = re.match(pattern, line)
         
         # track number of lines
         line_num += 1
@@ -38,7 +38,7 @@ try:
             # compute total file size per line
             total_size += file_size
 
-        if line_num == 10:
+        if line_num % 10 == 0:
             print(f"File size: {total_size}")
             sorted_dic = dict(sorted(statuscode_dic.items()))
             for key, value in sorted_dic.items():
@@ -46,8 +46,6 @@ try:
 
             # reset values back for the next log group
             line_num = 0
-            statuscode_dic = {}
-            total_size = 0
 
 except KeyboardInterrupt:
     print(f"File size: {total_size}")
