@@ -16,10 +16,9 @@ try:
         pattern = rf'^(\d+\.\d+\.\d+\.\d+) - \[([^\]]+)\] "{rq}" (\d+) (\d+)$'
         match = re.match(pattern, line)
 
-        # track number of lines
-        line_num += 1
-
         if match:
+            # track number of lines
+            line_num += 1
             # necessary data
             ip_address = match.group(1)
             date = match.group(2)
