@@ -15,10 +15,11 @@ try:
         rq = "GET /projects/260 HTTP/1.1"
         pa = rf'^(\d+\.\d+\.\d+\.\d+) - \[([^\]]+)\] "{rq}" (\d+) (\d+)$'
         match = re.match(pa, line)
-        if match:
-            # track number of match lines
-            line_num += 1
+        
+        # track number of lines
+        line_num += 1
 
+        if match:
             # necessary data
             ip_address = match.group(1)
             date = match.group(2)
