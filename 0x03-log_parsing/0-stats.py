@@ -15,7 +15,7 @@ try:
         rq = "GET /projects/260 HTTP/1.1"
         pattern = rf'^(\d+\.\d+\.\d+\.\d+) - \[([^\]]+)\] "{rq}" (\d+) (\d+)$'
         match = re.match(pattern, line)
-        
+
         # track number of lines
         line_num += 1
 
