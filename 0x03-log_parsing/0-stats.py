@@ -41,7 +41,10 @@ try:
             print(f"File size: {total_size}")
             sorted_dic = dict(sorted(statuscode_dic.items()))
             for key, value in sorted_dic.items():
-                print(f"{key}: {value}")
+                try:
+                    print(f"{int(key)}: {value}")
+                except Exception:
+                    pass
 
             # reset values back for the next log group
             line_num = 0
