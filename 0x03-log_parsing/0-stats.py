@@ -11,7 +11,8 @@ statuscode_dic = {}
 total_size = 0
 
 try:
-    for line in sys.stdin:
+    while True:
+        line = input()
         rq = "GET /projects/260 HTTP/1.1"
         pattern = rf'^(\d+\.\d+\.\d+\.\d+) - \[([^\]]+)\] "{rq}" (\d+) (\d+)$'
         match = re.match(pattern, line)
@@ -20,8 +21,6 @@ try:
             # track number of lines
             line_num += 1
             # necessary data
-            ip_address = match.group(1)
-            date = match.group(2)
             try:
                 status_code = int(match.group(3))
             except ValueError:
@@ -37,20 +36,17 @@ try:
             # compute total file size per line
             total_size += file_size
 
-        if line_num % 10 == 0:
-            print(f"File size: {total_size}")
-            sorted_dic = dict(sorted(statuscode_dic.items()))
-            for key, value in sorted_dic.items():
-                try:
-                    print(f"{int(key)}: {value}")
-                except Exception:
-                    pass
+            if line_num % 10 == 0:
+                print(f"File size: {total_size}", flush=True)
+                sorted_dic = dict(sorted(statuscode_dic.items()))
+                for key, value in sorted_dic.items():
+                    try:
+                        print(f"{int(key)}: {value}")
+                    except Exception:
+                        pass
 
-            # reset values back for the next log group
-            line_num = 0
-
-except KeyboardInterrupt:
-    print(f"File size: {total_size}")
+except Exception:
+    print(f"File size: {total_size}", flush=True)
     sorted_dic = dict(sorted(statuscode_dic.items()))
     for key, value in sorted_dic.items():
         print(f"{key}: {value}")
