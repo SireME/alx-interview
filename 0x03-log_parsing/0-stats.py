@@ -13,8 +13,10 @@ total_size = 0
 try:
     while True:
         line = input()
+        ip = r"\d+\.\d+\.\d+\.\d+|\w+"
         rq = "GET /projects/260 HTTP/1.1"
-        pattern = rf'^(\d+\.\d+\.\d+\.\d+) - \[([^\]]+)\] "{rq}" (\d+) (\d+)$'
+        p = rf'^({ip})\s?-\s?\[([^\]]+)\] "{rq}" (\d+|\w+) (\d+)$'
+        pattern = p
         match = re.match(pattern, line)
 
         if match:
@@ -25,12 +27,15 @@ try:
                 status_code = int(match.group(3))
             except ValueError:
                 status_code = ""
-            file_size = int(match.group(4))
+            try:
+                file_size = int(match.group(4))
+            except Exception:
+                file_size = 0
 
-            # compute number of occurrences of status codes
-            if status_code in statuscode_dic:
+            # compute umber of occurrences of status codes
+            if status_code in statuscode_dic and type(status_code) == int:
                 statuscode_dic[status_code] += 1
-            else:
+            elif type(status_code) == int:
                 statuscode_dic[status_code] = 1
 
             # compute total file size per line
